@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Choose Your Food - Mindora Cooking</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+    @font-face {
+      font-family: myFont;
+      src: url(ACaslonPro-Italic.otf);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: myFont, serif;
+      background: url('hp2.png') no-repeat center center/cover;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 100px;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+      margin-bottom: 40px;
+    }
+
+    .container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 60px;
+    }
+
+    .food-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      width: 180px;
+      height: 230px;
+    }
+
+    .food-item:hover {
+      transform: scale(1.1);
+    }
+
+    .food-item img {
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+      image-rendering: pixelated;
+    }
+
+    .food-item p {
+      margin-top: 5px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 30px;
+      color: #fff;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    }
+
+    /* Settings Icon */
+    .settings-icon {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      z-index: 10;
+    }
+
+    .settings-icon:hover {
+      transform: scale(1.1);
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 20;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      width: 320px;
+      text-align: center;
+      color: #333;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      font-family: 'Playfair Display', serif;
+    }
+
+    .modal-content label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .modal-content input,
+    .modal-content select {
+      margin-top: 5px;
+      width: 100%;
+    }
+
+    .btn {
+      margin-top: 20px;
+      padding: 8px 20px;
+      background: #714413;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+    }
+
+    .btn:hover {
+      background: #5e3610;
+    }
+  </style>
+</head>
+<body>
+
+  <h2><br></h2>
+
+  <!-- Settings Icon -->
+  <img src="assets/settings.png" id="settingsIcon" class="settings-icon" onclick="toggleSettings()" alt="Settings Icon" />
+
+  <!-- Food Grid -->
+  <div class="container">
+    <div class="food-grid">
+      <div class="food-item" title="Pasta" onclick="window.location.href='pasta.html'">
+        <img src="assets/pasta.png" alt="Pasta">
+        <p>Pasta</p>
+      </div>
+      <div class="food-item" title="Soup" onclick="window.location.href='soup.html'">
+        <img src="assets/soup.png" alt="Soup">
+        <p>Soup</p>
+      </div>
+      <div class="food-item" title="Cake" onclick="window.location.href='cake.html'">
+        <img src="assets/cake.png" alt="Cake">
+        <p>Cake</p>
+      </div>
+      <div class="food-item" title="Cupcake" onclick="window.location.href='cupcake.html'">
+        <img src="assets/cupcake.png" alt="Cupcake">
+        <p>Cupcake</p>
+      </div>
+      <div class="food-item" title="Lamb Chop" onclick="window.location.href='lambchop.html'">
+        <img src="assets/lambchop.png" alt="Lamb Chop">
+        <p>Lamb Chop</p>
+      </div>
+      <div class="food-item" title="Cookies" onclick="window.location.href='cookies.html'">
+        <img src="assets/cookies.png" alt="Cookies">
+        <p>Cookies</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal" id="settingsModal">
+    <div class="modal-content">
+      <a href="../index.html" style="text-decoration: none; color: black;"><h3>🔧 Settings</h3></a>
+
+      <label for="brightness">Brightness</label>
+      <input type="range" id="brightness" min="0.3" max="1.5" step="0.01" value="1">
+
+      <label for="musicSelector">Music Track</label>
+      <select id="musicSelector">
+        <option value="success">Success</option>
+        <option value="passion">Passion</option>
+        <option value="love">Love</option>
+        <option value="spring">Spring</option>
+      </select>
+
+      <label for="volumeSlider">Volume</label>
+      <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
+
+      <button class="btn" onclick="closeModal('settingsModal')">Close</button>
+    </div>
+  </div>
+
+  <!-- Background Music Element -->
+  <audio id="bgMusic" src="assets/success.mp3" loop autoplay></audio>
+
+  <script>
+    function toggleSettings() {
+      document.getElementById('settingsModal').style.display = 'flex';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    const music = document.getElementById("bgMusic");
+    const volumeSlider = document.getElementById("volumeSlider");
+    const musicSelector = document.getElementById("musicSelector");
+    const brightnessSlider = document.getElementById("brightness");
+
+    // Volume control
+    volumeSlider.oninput = () => {
+      music.volume = volumeSlider.value;
+    };
+
+    // Change music track
+    musicSelector.onchange = () => {
+      music.src = `assets/${musicSelector.value}.mp3`;
+      music.play();
+    };
+
+    // Brightness control
+    brightnessSlider.oninput = () => {
+      document.body.style.filter = `brightness(${brightnessSlider.value})`;
+    };
+  </script>
+</body>
+</html>

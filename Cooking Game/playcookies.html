@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Play Cookies</title>
+  <style>
+    @font-face {
+      font-family: myFont;
+      src: url(ACaslonPro-Italic.otf);
+    }
+
+    body {
+      font-family: myFont;
+      margin: 0;
+      background: url('bg/bg4.png') no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.5s ease;
+      background-color: rgba(80, 50, 20, 0.9);
+      backdrop-filter: blur(5px);
+    }
+
+    .session1, .session2 {
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      width: 90%;
+      max-width: 1000px;
+      padding: 30px;
+      border-radius: 20px;
+      background-color: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .active {
+      display: flex;
+    }
+
+    .session1 img {
+      width: 300px;
+      image-rendering: pixelated;
+    }
+
+    .recipe {
+      max-width: 500px;
+      padding-left: 40px;
+    }
+
+    .recipe h2 {
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    .recipe ul {
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    .continue-btn {
+      margin-top: 20px;
+      padding: 10px 25px;
+      background-color: #fce9d5;
+      border: none;
+      border-radius: 20px;
+      font-size: 20px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      font-family: myFont;
+      transition: all 0.3s ease;
+    }
+
+    .continue-btn:hover {
+      background-color: #f5d2c0;
+      transform: translateY(-5px);
+    }
+
+    .grid {
+      padding: 30px 0;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 60px;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .ingredient {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 110px;
+      height: 120px;
+      padding: 5px;
+      border: 2px solid #fff;
+      border-radius: 12px;
+      cursor: pointer;
+      background-color: rgba(252, 233, 213, 0.2);
+      font-family: myFont;
+      transition: all 0.2s ease;
+      user-select: none;
+      text-align: center;
+    }
+
+    .ingredient img {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      margin-bottom: 6px;
+      image-rendering: pixelated;
+      pointer-events: none;
+    }
+
+    .ingredient p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .ingredient.selected {
+      background-color: #f5c9a0;
+      border-color: #000;
+    }
+
+    .ingredient.wrong {
+      background-color: #ffb6b6 !important;
+      border-color: #a00 !important;
+    }
+
+    .submit-btn {
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      background-color: #d8b89c;
+      border-radius: 20px;
+      font-family: myFont;
+      cursor: pointer;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+      margin: 0 auto;
+      display: block;
+    }
+
+    .submit-btn:hover {
+      background-color: #bca18c;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="session1 active" id="session1">
+    <img src="assets/cookies.png" alt="Cookies Image">
+    <div class="recipe">
+      <h2>Classic Chocolate Chip Cookies</h2>
+      <ul>
+        <li>1 egg</li>
+        <li>80g sugar</li>
+        <li>120g flour</li>
+        <li>1 tsp vanilla extract</li>
+        <li>1/2 tsp baking soda</li>
+        <li>80g butter</li>
+        <li>Chocolate chips</li>
+        <li>1/4 tsp salt</li>
+      </ul>
+      <button class="continue-btn" onclick="goToSession2()">Start Baking</button>
+    </div>
+  </div>
+
+  <div class="session2" id="session2">
+    <div class="ingredients">
+      <h2>Select the correct ingredients to bake cookies!</h2>
+      <div class="grid"></div>
+      <button class="submit-btn" onclick="submitIngredients()">Submit</button>
+    </div>
+  </div>
+
+  <script>
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function goToSession2() {
+      document.body.style.background = "url('assets/table.png') no-repeat center center/cover";
+
+      document.getElementById('session1').classList.remove('active');
+      document.getElementById('session2').classList.add('active');
+
+      const correct = [
+        "eggs", "sugar", "flour", "vanilla extract",
+        "baking soda", "butter", "chocolate chips", "salt"
+      ];
+
+      const distractors = [
+        "milk", "whipped cream", "honey", "ketchup",
+        "mayonnaise", "olive oil", "banana"
+      ];
+
+      const allIngredients = shuffle([...correct, ...distractors]);
+      const selectedSet = allIngredients.slice(0, 15);
+
+      const grid = document.querySelector('.grid');
+      grid.innerHTML = '';
+
+      selectedSet.forEach(name => {
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('ingredient');
+        wrapper.dataset.name = name;
+
+        const filename = name.replace(/\s+/g, '_').toLowerCase();
+        const img = document.createElement('img');
+        img.src = `assets/ingredients/${filename}.png`;
+        img.alt = name;
+
+        const label = document.createElement('p');
+        label.textContent = name.charAt(0).toUpperCase() + name.slice(1);
+
+        wrapper.appendChild(img);
+        wrapper.appendChild(label);
+        grid.appendChild(wrapper);
+      });
+
+      window.correctIngredients = correct;
+    }
+
+    document.addEventListener('click', function(e) {
+      const item = e.target.closest('.ingredient');
+      if (item) {
+        item.classList.toggle('selected');
+      }
+    });
+
+    function submitIngredients() {
+      const selectedButtons = document.querySelectorAll('.ingredient.selected');
+      const selectedNames = Array.from(selectedButtons).map(btn => btn.dataset.name);
+
+      let correctCount = 0;
+      let wrongCount = 0;
+
+      selectedButtons.forEach(btn => {
+        const name = btn.dataset.name;
+        if (!window.correctIngredients.includes(name)) {
+          btn.classList.add('wrong');
+          wrongCount++;
+        } else {
+          correctCount++;
+        }
+      });
+
+      const rawScore = correctCount - wrongCount;
+      const adjustedScore = Math.max(0, rawScore);
+      const percentage = Math.round((adjustedScore / window.correctIngredients.length) * 100);
+
+      setTimeout(() => {
+        window.location.href = `end.html?score=${percentage}&food=cookies`;
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

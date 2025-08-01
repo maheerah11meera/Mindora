@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mindora Result</title>
+  <style>
+    @font-face {
+      font-family: myFont;
+      src: url(ACaslonPro-Italic.otf);
+    }
+
+    body {
+      margin: 0;
+      font-family: myFont;
+      background: url('bg/hp3.png') no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      position: relative;
+    }
+
+    .top-icons {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .top-icons img {
+      width: 50px;
+      height: auto;
+      image-rendering: pixelated;
+    }
+
+    .game-name {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .stars {
+      display: flex;
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .stars img {
+      width: 120px; /* ⭐ Bigger stars */
+      height: auto;
+      image-rendering: pixelated;
+    }
+
+    .motivational {
+      font-size: 28px;
+      background-color: rgba(255,255,255,0.9);
+      color: #333;
+      padding: 15px 30px;
+      border-radius: 20px;
+      box-shadow: 4px 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .congrats {
+      font-size: 40px;
+      color: #fff;
+      text-shadow: 2px 2px 6px #000;
+    }
+
+    .btn {
+      margin-top: 30px;
+      font-size: 18px;
+      padding: 10px 25px;
+      border: none;
+      background-color: #fce9d5;
+      font-family: myFont;
+      border-radius: 15px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #f5d2c0;
+    }
+
+    .music-toggle {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      background-color: #fff5dc;
+      border: none;
+      padding: 10px 14px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .music-panel {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fce9d5;
+      padding: 30px 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.3);
+      display: none;
+      z-index: 999;
+      color: #000; /* 🖤 Text inside music panel */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top right music button -->
+  <button class="music-toggle" onclick="toggleMusicPanel()">🎵</button>
+
+  <!-- Music panel -->
+  <div class="music-panel" id="musicPanel">
+    <h3>🎧 Music Settings</h3>
+    <label>Volume</label><br>
+    <input type="range" id="volumeSlider" min="0" max="1" step="0.01"><br><br>
+
+    <label>Choose Track:</label><br>
+    <select id="musicSelector">
+      <option value="success">Success</option>
+      <option value="passion">Passion</option>
+      <option value="love">Love</option>
+      <option value="spring">Spring</option>
+    </select><br><br>
+
+    <button class="btn" onclick="closeMusicPanel()">Close</button>
+  </div>
+
+  <div class="top-icons">
+    <img id="foodIcon" src="assets/cake.png" alt="Cake" />
+    <div class="game-name" id="gameName">Cake</div>
+  </div>
+
+  <div class="stars" id="starsContainer"></div>
+
+  <div class="congrats" id="congratsText"></div>
+  <div class="motivational" id="message">You have received 3 stars from the customer!!</div>
+
+  <button class="btn" onclick="window.location.href='food.html'">Play Again</button>
+
+  <audio id="bgMusic" src="assets/success.mp3" autoplay loop></audio>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const score = parseInt(params.get('score')) || 0;
+    const food = params.get('food') || 'cake';
+
+    // Set food icon & name
+    document.getElementById('foodIcon').src = `assets/${food}.png`;
+    document.getElementById('gameName').textContent = food.charAt(0).toUpperCase() + food.slice(1);
+
+    // Set stars
+    let yellow = 0;
+    if (score >= 75) yellow = 3;
+    else if (score >= 50) yellow = 2;
+    else if (score >= 30) yellow = 1;
+
+    const grey = 3 - yellow;
+    const starsContainer = document.getElementById('starsContainer');
+
+    for (let i = 0; i < yellow; i++) {
+      const star = document.createElement('img');
+      star.src = 'assets/ystar.png';
+      star.alt = 'Yellow Star';
+      starsContainer.appendChild(star);
+    }
+
+    for (let i = 0; i < grey; i++) {
+      const star = document.createElement('img');
+      star.src = 'assets/gstar.png';
+      star.alt = 'Grey Star';
+      starsContainer.appendChild(star);
+    }
+
+    // Set motivational and congrats text
+    const msg = document.getElementById('message');
+    const congrats = document.getElementById('congratsText');
+
+    if (yellow === 3) {
+      msg.textContent = "You have received 3 stars from the customer!!";
+      congrats.textContent = "Congratulations!!";
+    } else if (yellow === 2) {
+      msg.textContent = "Almost perfect! The customer is very happy!";
+      congrats.textContent = "Congratulations!!";
+    } else {
+      msg.textContent = yellow === 1
+        ? "You made a decent cake! Keep practicing!"
+        : "Oops! The customer didn’t enjoy it... Try again!";
+      congrats.textContent = "What did you do?!";
+    }
+
+    // Music Panel Logic
+    const bgMusic = document.getElementById("bgMusic");
+    const volumeSlider = document.getElementById("volumeSlider");
+    const musicSelector = document.getElementById("musicSelector");
+
+    function toggleMusicPanel() {
+      const panel = document.getElementById("musicPanel");
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    }
+
+    function closeMusicPanel() {
+      document.getElementById("musicPanel").style.display = "none";
+    }
+
+    bgMusic.volume = 0.5;
+    volumeSlider.value = 0.5;
+
+    volumeSlider.addEventListener('input', () => {
+      bgMusic.volume = volumeSlider.value;
+    });
+
+    musicSelector.addEventListener('change', () => {
+      const track = musicSelector.value;
+      bgMusic.src = `assets/${track}.mp3`;
+      bgMusic.play();
+    });
+  </script>
+</body>
+</html>

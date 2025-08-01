@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brewing SOUP!!</title>
+  <style>
+    @font-face {
+      font-family: myFont;
+      src: url(ACaslonPro-Italic.otf);
+    }
+
+    body {
+      font-family: myFont;
+      margin: 0;
+      background: url('bg/hp3.png') no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .soup-container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .soupImg {
+      width: 280px;
+      height: auto;
+      image-rendering: pixelated;
+    }
+
+    .SoupButton {
+      position: absolute;
+      bottom: 60px;
+      padding: 10px 25px;
+      background-color: #fce9d5;
+      border: none;
+      border-radius: 20px;
+      font-size: 30px;
+      font-family: myFont;
+      box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .SoupButton a{
+        text-decoration: none;
+        color: black;
+    }
+    .SoupButton:hover {
+      background-color: #f5d2c0;
+      transform: translateY(-6px);
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="soup-container">
+    <img class="soupImg" src="assets/soup.png" alt="soup">
+    <button class="SoupButton"><a href="playsoup.html">Play</a></button>
+  </div>
+</body>
+</html>

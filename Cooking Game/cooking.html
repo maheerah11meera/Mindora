@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mindora Cooking Game</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+    @font-face {
+        font-family: myFont;
+        src: url(ACaslonPro-Italic.otf);
+    }
+    body {
+  margin: 0;
+  font-family: myFont;
+  background: url('hp.png') no-repeat center center/cover;
+  height: 100vh;
+  overflow: hidden;
+  filter: brightness(1); /* Initial brightness */
+  transition: filter 0.3s ease;
+}
+
+
+    .main-menu {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .logo img {
+      width: 400px;
+      margin-bottom: 40px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      background: #F8F3E7;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 24px;
+      font-weight: bold;
+      font-family: myFont;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn:hover {
+      background: #D3C6BC;
+    }
+
+    .modal, .loader-screen {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 20;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      width: 320px;
+      text-align: center;
+      color: #333;
+    }
+
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #555;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .settings-icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #fff5dc;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .settings-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.settings-icon:hover {
+  content: url('assets/settings2.png');
+  transform: scale(1.1);
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Settings Icon -->
+<img src="assets/settings.png" id="settingsIcon" class="settings-icon" onclick="toggleSettings()" alt="Settings Icon" />
+
+
+  <div class="main-menu">
+    <div class="logo">
+      <a href="../index.html"><img src="logo/mindora_cooking.png" alt="Mindora Cooking Logo"></a>
+    </div>
+    <div class="buttons">
+      <button class="btn" id="playBtn">PLAY</button>
+      <button class="btn" id="instructionBtn">INSTRUCTION</button>
+    </div>
+  </div>
+
+  <!-- Instruction Modal -->
+  <div class="modal" id="instructionModal">
+    <div class="modal-content">
+      <p>
+        1. Choose a food to make<br/>
+        2. You will be given a manual to memorise<br/>
+        3. Cook according to the manual<br/>
+        4. Serve to the customer
+      </p>
+      <button class="btn" onclick="closeModal('instructionModal')">Close</button>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal" id="settingsModal">
+    <div class="modal-content">
+      <h3>🔧 Settings</h3>
+      
+      <label for="brightness">Brightness</label><br>
+      <input type="range" id="brightness" min="0.3" max="1.5" step="0.01" value="1"><br><br>
+
+      <label for="musicSelector">Music Track</label><br>
+      <select id="musicSelector">
+        <option value="success">Success</option>
+        <option value="passion">Passion</option>
+        <option value="love">Love</option>
+        <option value="spring">Spring</option>
+      </select><br><br>
+
+      <label>Volume</label><br>
+      <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5"><br><br>
+
+      <button class="btn" onclick="closeModal('settingsModal')">Close</button>
+    </div>
+  </div>
+
+  <!-- Loader -->
+  <div class="loader-screen" id="loaderScreen">
+    <div class="loader"></div>
+  </div>
+
+  <audio id="bgMusic" src="assets/success.mp3" autoplay loop></audio>
+
+  <script>
+    const music = document.getElementById("bgMusic");
+    const volumeSlider = document.getElementById("volumeSlider");
+    const musicSelector = document.getElementById("musicSelector");
+    const brightnessSlider = document.getElementById("brightness");
+
+    document.getElementById('instructionBtn').onclick = () => {
+      document.getElementById('instructionModal').style.display = 'flex';
+    };
+
+    document.getElementById('playBtn').onclick = () => {
+      document.getElementById('loaderScreen').style.display = 'flex';
+      setTimeout(() => {
+        window.location.href = 'food.html';
+      }, 2000);
+    };
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    function toggleSettings() {
+      document.getElementById('settingsModal').style.display = 'flex';
+    }
+
+    volumeSlider.oninput = () => {
+      music.volume = volumeSlider.value;
+    };
+
+    musicSelector.onchange = () => {
+      music.src = `assets/${musicSelector.value}.mp3`;
+      music.play();
+    };
+
+    brightnessSlider.oninput = () => {
+      document.body.style.filter = `brightness(${brightnessSlider.value})`;
+    };
+  </script>
+</body>
+</html>
