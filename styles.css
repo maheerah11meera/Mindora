@@ -1,0 +1,423 @@
+/* Import classic and modern vintage fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+@font-face {
+    font-family: myFont;
+    src: url(ACaslonPro-Bold.otf);
+}
+@font-face {
+    font-family: Cursive;
+    src: url(../../../../.Trash/lesley-font-demo/LesleyDemo.otf);
+}
+button{
+    font-family: Cursive;
+}
+
+@font-face {
+    font-family: Classic;
+    src: url(britishclassical-thinitalic.otf);
+}
+
+p h1{
+    font-family: myFont;
+}
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #EAEAE7;
+    color: #646355;
+    padding-top: 80px; /* Prevents navbar from hiding content */
+}
+
+#welcome {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Align text to the right */
+    padding-right: 10%;
+    text-align: right;
+}
+
+.welcome-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Align text and button to the right */
+}
+
+/* Typewriter Effect */
+#welcome h2 {
+    font-family: myFont;
+    text-transform: uppercase;
+    font-size: 110px;
+    color: white;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 4px solid white; /* Cursor effect */
+    display: inline-block;
+    min-height: 120px; /* Prevents text movement */
+}
+
+/* Button style (Fixed Position) */
+.welcome-content .btn {
+    margin-top: 20px;
+    position: relative; /* Keeps the button stable */
+}
+
+
+
+
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color:  #9E7E67;
+    padding: 15px 25px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Adds shadow to navbar */
+}
+
+.navbar:hover {
+    background-color:#D3C6BC;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.logo img {
+    width: 111px;
+    margin: -20px 10px;
+    width: 150px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li {
+    display: inline;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #646355;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    background-color: #A59083;
+    color: white;
+}
+
+#about img{
+    width: 350px;
+}
+
+/* Button Styling */
+.btn-7 {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    background: linear-gradient(0deg, #EAEAE7 0%, #9E7E67 100%);
+    color: #646355;
+    line-height: 42px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-weight: light;
+}
+
+.btn-7:hover {
+    color: #EAEAE7;
+    background: #646355;
+}
+#welcome {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white; /* Make text visible */
+}
+
+.welcome-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+/* Dark overlay */
+#welcome::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Adjust the last value (0.5) for darker/lighter effect */
+    z-index: 1;
+}
+
+/* Make the text appear above the dark background */
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* Active class for background fade effect */
+.welcome-bg.active {
+    opacity: 1;
+}
+
+
+
+#hero {
+    background-color: #A59083;
+    text-align: center;
+    padding: 80px 20px;
+    color: white;
+}
+
+.hero-content h2 {
+    font-size: 2em;
+}
+
+.btn {
+    font-family: cursive;
+    display: inline-block;
+    background-color: #646355;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background-color: #4C4A45;
+}
+
+section {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.gallery-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.gallery-item {
+    width: 100px;
+    height: 100px;
+    background-color: #D3C6BC;
+    border-radius: 5px;
+}
+
+footer {
+    background-color: #9E7E67;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+
+
+#scrollToTop::after {
+    content: "↑";
+    position: absolute;
+    font-size: 20px;
+    color: white;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+/* Scroll to Top Button */
+#scrollToTop {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    background-color: #895129; /* Classic background */
+    border-radius: 50%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Fix arrow alignment */
+#scrollToTop svg {
+    transform: rotate(0deg); /* Ensure the arrow is upright */
+}
+
+/* Progress circle animation */
+#scrollToTop circle {
+    transition: stroke-dashoffset 0.3s linear;
+}
+
+/* Hover effect */
+#scrollToTop:hover {
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+
+#scrollToTop svg text {
+    fill: #fff; /* Change arrow color */
+    font-weight: bold;
+}
+
+#scrollToTop circle {
+    stroke: #D3C6BC; /* Change progress circle color */
+}
+
+#games, #testimonials, #team, #news {
+    background-color: #EAEAE7;
+    color: #646355;
+  }
+  
+  #games .gallery-item {
+    width: 100px;
+    height: 100px;
+    background-color: #D3C6BC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border-radius: 5px;
+    font-family: myFont;
+    font-size: 16px;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+  }
+  #testimonials {
+    background-color: #D3C6BC;
+    padding: 60px 20px;
+    color: #333;
+  }
+  
+  .testimonial-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 40px;
+  }
+  
+  .testimonial-card {
+    width: 220px;
+    height: 150px;
+    perspective: 1000px;
+  }
+  
+  .testimonial-card .front,
+  .testimonial-card .back {
+    width: 100%;
+    height: 100%;
+    background-color: #F8F3E7;
+    border-radius: 15px;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    backface-visibility: hidden;
+    position: absolute;
+    transition: transform 0.6s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: myFont;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  .testimonial-card .back {
+    transform: rotateY(180deg);
+    background-color: #EAEAE7;
+  }
+  
+  .testimonial-card:hover .front {
+    transform: rotateY(180deg);
+  }
+  
+  .testimonial-card:hover .back {
+    transform: rotateY(360deg);
+  }
+  
+
+
+.testimonial-container{
+    gap: 100px;
+}
+#team {
+    background-color: #EAEAE7;
+    text-align: center;
+    padding: 60px 20px;
+    color: #646355;
+  }
+  
+  .team-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+  }
+  
+  .team-member {
+    background-color: #F8F3E7;
+    padding: 20px;
+    border-radius: 15px;
+    width: 180px;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
+    font-family: myFont;
+  }
+  
+  .team-member img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+  }
+  
+  .team-member .name {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 5px 0;
+  }
+  
+  .team-member .role {
+    font-size: 14px;
+    color: #9E7E67;
+  }
+  
