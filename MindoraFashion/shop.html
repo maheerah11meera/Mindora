@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fashion Shop</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      background: linear-gradient(145deg, #000000, #000000);
+    }
+
+    .sidebar {
+      width: 220px;
+      background-color: #000000;
+      border-right: 2px solid #c6a39d;
+      padding: 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      font-family: 'Georgia', serif;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+    }
+
+    .sidebar-header {
+      font-size: 1.4em;
+      color: gold;
+      margin-bottom: 20px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 1px solid #cbb1a8;
+      padding-bottom: 10px;
+    }
+
+    .category-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .category-list li {
+      padding: 10px 15px;
+      color: #5a3e36;
+      margin: 6px 0;
+      background-color: #fff8f6;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1em;
+    }
+
+    .category-list li:hover {
+      background-color: #d8b4a0;
+      color: white;
+    }
+
+    .category-list a {
+      text-decoration: none;
+      color: #5a3e36;
+      font-weight: 500;
+    }
+
+    .category-list a:hover {
+      color: white;
+      background-color: #b37b6c;
+      display: inline-block;
+      width: 100%;
+      border-radius: 8px;
+      padding: 10px 15px;
+    }
+
+    .main-content {
+      margin-left: 240px;
+      padding: 30px;
+      flex-grow: 1;
+    }
+
+    .coins {
+      font-size: 1.5em;
+      color: gold;
+      margin-bottom: 20px;
+      font-family: 'Georgia', serif;
+    }
+
+    .clothes-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+    }
+
+    .item {
+      text-align: center;
+      background-color: #f9f3f3;
+      border-radius: 12px;
+      padding: 25px;
+      cursor: pointer;
+      border: 2px solid #5a2a4e;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, background-color 0.3s;
+    }
+
+    .item img {
+      width: 150px;
+      height: 150px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .item:hover {
+      background-color: gold;
+      color: white;
+      transform: translateY(-5px);
+    }
+  </style>
+</head>
+<body>
+
+  <iframe id="musicFrame" src="music.html" style="display: none;" allow="autoplay"></iframe>
+
+
+  <div class="sidebar">
+    <div class="sidebar-header">Categories</div>
+    <ul class="category-list">
+      <li onclick="changeCategory('tops')">Tops</li>
+      <li onclick="changeCategory('bottoms')">Bottoms</li>
+      <li onclick="changeCategory('shoes')">Shoes</li>
+      <li onclick="changeCategory('accessories')">Accessories</li>
+      <li><a href="homepage.html">← Back to Homepage</a></li>
+    </ul>
+  </div>  
+
+  <div class="main-content">
+    <div class="coins" id="coinsDisplay">Coins: 0</div>
+    <div id="clothesContainer" class="clothes-container"></div>
+  </div>
+
+  <script src="coinManager.js"></script>
+  <script>
+    // --- CLOTHES DATA ---
+    const clothes = {
+      tops: [
+        { name: 'T-Shirt', image: 't-shirt.png', price: 10 },
+        { name: 'Sweater', image: 'sweater.png', price: 20 },
+        { name: 'Blouse', image: 'blouse.png', price: 15 },
+      ],
+      bottoms: [
+        { name: 'Jeans', image: 'jeans.png', price: 15 },
+        { name: 'Shorts', image: 'shorts.png', price: 10 },
+        { name: 'Skirt', image: 'skirt.png', price: 12 },
+      ],
+      shoes: [
+        { name: 'Sneakers', image: 'sneakers.png', price: 25 },
+        { name: 'Boots', image: 'boots.png', price: 30 },
+        { name: 'Sandals', image: 'sandal.png', price: 15 },
+      ],
+      accessories: [
+        { name: 'Hat', image: 'hat.png', price: 5 },
+        { name: 'Sunglasses', image: 'sunglasses.png', price: 10 },
+        { name: 'Scarf', image: 'scarf.png', price: 7 },
+      ]
+    };
+
+    let currentCategory = 'tops';
+
+    // --- LOCALSTORAGE COINS ---
+    function loadCoins() {
+      let coins = localStorage.getItem("coins");
+      if (!coins) {
+        coins = 0;
+        localStorage.setItem("coins", coins);
+      }
+      return parseInt(coins);
+    }
+
+    function saveCoins(newAmount) {
+      localStorage.setItem("coins", newAmount);
+      updateCoinsDisplay();
+    }
+
+    function updateCoinsDisplay() {
+      const coins = loadCoins();
+      document.getElementById('coinsDisplay').textContent = `Coins: ${coins}`;
+    }
+
+    // --- CATEGORY HANDLING ---
+    function changeCategory(category) {
+      currentCategory = category;
+      displayClothes();
+    }
+
+    function displayClothes() {
+      const container = document.getElementById('clothesContainer');
+      container.innerHTML = '';
+      clothes[currentCategory].forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.classList.add('item');
+        itemDiv.innerHTML = `
+          <img src="${item.image}" alt="${item.name}">
+          <div>${item.name}</div>
+          <div>${item.price} Coins</div>
+        `;
+        itemDiv.onclick = () => buyItem(item);
+        container.appendChild(itemDiv);
+      });
+    }
+
+    // --- BUY ITEM ---
+    function buyItem(item) {
+      let coins = loadCoins();
+      if (coins >= item.price) {
+        coins -= item.price;
+        saveCoins(coins);
+        alert(`You bought a ${item.name}!`);
+      } else {
+        alert("You don't have enough coins 😢");
+      }
+    }
+
+    // --- INIT ---
+    document.addEventListener("DOMContentLoaded", () => {
+      updateCoinsDisplay();
+      displayClothes();
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+  updateCoinsDisplay();
+
+  const clothes = [
+    { name: "Cool Jacket", price: 30 },
+    { name: "Fancy Dress", price: 50 },
+    // Add more items as needed
+  ];
+
+  const shopContainer = document.getElementById("shopItems");
+
+  clothes.forEach(item => {
+    const btn = document.createElement("button");
+    btn.textContent = `${item.name} - ${item.price} coins`;
+    btn.addEventListener("click", () => {
+      if (spendCoins(item.price)) {
+        alert(`You bought ${item.name}!`);
+        // Optionally: Save to inventory
+      }
+    });
+    shopContainer.appendChild(btn);
+  });
+});
+
+  </script>
+
+</body>
+</html>

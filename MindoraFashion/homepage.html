@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Homepage UI</title>
+  <link rel="stylesheet" href="homestyle.css" />
+</head>
+<body>
+  <div class="homepage-container">
+    <div class="background"></div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+      <a href="leaderboard.html" class="nav-item">
+        <img src="leaderboard.png" alt="Leaderboard" class="nav-icon" />
+        <span class="nav-label">Leaderboard</span>
+      </a>
+      <a href="play.html" class="nav-item">
+        <img src="play.png" alt="Play" class="nav-icon" />
+        <span class="nav-label">Play</span>
+      </a>
+      <a href="shop.html" class="nav-item active">
+        <img src="shop.png" alt="Shop" class="nav-icon" />
+        <span class="nav-label">Shop</span>
+      </a>
+    </div>
+
+    <!-- Profile Section -->
+    <div class="profile-section" id="profile-btn">
+      <img src="pfp.jpg" alt="User Avatar" class="profile-img" />
+      <span class="username" id="username">Guest</span>
+    </div>
+
+    <!-- Profile Popup -->
+    <div class="popup" id="profile-popup">
+      <div class="popup-content">
+        <h2>Profile</h2>
+        <input type="text" id="name-input" placeholder="Enter Username" />
+        <button id="save-name">Save</button>
+        <button class="close-popup">Close</button>
+      </div>
+    </div>
+
+    <!-- Top-Right Controls: Coin + Settings -->
+<div class="top-right-buttons">
+    <button class="coin-btn">
+        <img src="coins.png" alt="Coins" />
+        <span id="coinCount">0</span>
+    </button>
+    <button id="settings-btn" class="settings-btn">⚙️</button>
+  </div>
+
+  <audio id="bg-music" autoplay loop>
+  <source src="Elegant jazz.mp3" type="audio/mpeg">
+</audio>
+
+    <!-- Settings Popup -->
+    <div class="popup" id="settings-popup">
+      <div class="popup-content">
+        <h2>Settings</h2>
+        <label>Brightness:
+          <input type="range" id="brightness-slider" min="50" max="150" value="100">
+        </label><br><br>
+        <label>Volume:
+          <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
+        </label><br><br>
+        <button class="close-popup">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="homescript.js"></script>
+  <script src="coinManager.js"></script>
+</body>
+</html>

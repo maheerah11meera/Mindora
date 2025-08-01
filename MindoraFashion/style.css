@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@500&display=swap');
+
+body {
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    background: url('frontpage.jpg') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    color: #4A3629;
+}
+
+.top-buttons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.menu-button {
+    background: rgba(255, 255, 255, 0.8);
+    color: #4A3629;
+    font-size: 20px;
+    padding: 10px;
+    margin: 5px;
+    border: 2px solid #d4af37;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    width: 85%;
+    margin: 50px auto;
+}
+
+.characters {
+    display: flex;
+    gap: 0px; 
+    position: relative;
+    top: 150px;
+}
+
+.model {
+    margin: 0;
+    width: 210px;
+    height: auto;
+    border-radius: 5px;
+    padding: 0;
+    margin: 0;
+}
+
+.ui-elements {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; 
+}
+
+.logo {
+    width: 400px;
+    position: relative;
+    top: 100px;
+    right: 100px;
+}
+
+.play-button {
+    background: linear-gradient(to bottom, #d4af37, #b8860b);
+    color: white;
+    font-size: 50px;
+    padding: 25px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-family: 'Great Vibes', cursive;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 100px;
+    right: 100px;
+}
+
+@media (max-width: 768px){
+    .content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .characters {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .model {
+        width: 120px;
+    }
+}

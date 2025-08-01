@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leaderboard</title>
+  <link rel="stylesheet" href="leaderboardstyle.css" />
+</head>
+<body>
+
+  <button id="settings-btn" class="settings-btn">⚙️</button>
+
+  <!-- Settings Popup -->
+  <div class="popup" id="settings-popup">
+    <div class="popup-content">
+      <h2>Settings</h2>
+      <label>Brightness:
+        <input type="range" id="brightness-slider" min="50" max="150" value="100">
+      </label><br><br>
+      <label>Volume:
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
+      </label><br><br>
+      <button class="close-popup">Close</button>
+    </div>
+  </div>
+
+  <div class="leaderboard-container">
+    <h1 class="leaderboard-title">🏅 LEADERBOARD 🏅</h1>
+    <ul id="styledLeaderboard" class="leaderboard-list"></ul>
+  </div>
+
+  <div class="name-entry">
+    <input type="text" id="playerName" placeholder="Enter your name" />
+    <button onclick="savePlayerData()">Save Name</button>
+  </div>
+
+  <button class="back-btn" id="back-btn" title="Back to Home">🔙</button>
+
+  <script src="coinManager.js"></script>
+  <script src="leaderboardscript.js"></script>
+  <script>
+    document.getElementById("back-btn").addEventListener("click", function () {
+      window.location.href = "homepage.html"; 
+    });
+  </script>
+</body>
+</html>
